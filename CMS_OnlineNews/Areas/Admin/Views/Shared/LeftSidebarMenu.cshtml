@@ -1,0 +1,82 @@
+﻿@*@using FPTShop.News.Data.Entities*@
+@using Model.EF
+<li class="header">Nội dung</li>
+<li class="treeview">
+    <a href="@(Url.Action("List", "Post", new { Area = "Admin" }))">
+        <i class="fa fa-newspaper-o"></i> <span>Bài viết</span>
+        <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+        </span>
+    </a>
+    <ul class="treeview-menu">
+        <li><a href="@(Url.Action("List", "Post", new { Area = "Admin" }))"><i class="fa fa-list"></i>Danh sách</a></li>
+        <li><a href="@(Url.Action("Create", "Post", new { Area = "Admin" }))"><i class="fa fa-plus"></i>Thêm mới</a></li>
+    </ul>
+</li>
+<li class="treeview">
+    <a href="@(Url.Action("List", "Category", new { Area = "Admin" }))">
+        <i class="fa fa-bars"></i> <span>Danh mục</span>
+        <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+        </span>
+    </a>
+    <ul class="treeview-menu">
+        <li><a href="@(Url.Action("List", "Category", new { Area = "Admin" }))"><i class="fa fa-list"></i>Danh sách</a></li>
+        <li><a href="@(Url.Action("Create", "Category", new { Area = "Admin" }))"><i class="fa fa-plus"></i>Thêm mới</a></li>
+    </ul>
+</li>
+<li class="treeview">
+    <a href="@(Url.Action("List", "Tags", new { Area = "Admin" }))">
+        <i class="fa fa-tag"></i> <span>Tag</span>
+        <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+        </span>
+    </a>
+    <ul class="treeview-menu">
+        <li><a href="@(Url.Action("List", "Tags", new { Area = "Admin" }))"><i class="fa fa-list"></i>Danh sách</a></li>
+        <li><a href="@(Url.Action("Create", "Tags", new { Area = "Admin" }))"><i class="fa fa-plus"></i>Thêm mới</a></li>
+    </ul>
+</li>
+@*<li class="header"></li>
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-edit"></i> <span>Import Data</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li>@Html.ActionLink("Danh mục", "ImportCategories", "Import", new { area = "Admin" }, null)</li>
+            <li>@Html.ActionLink("Post", "ImportPosts", "Import", new { area = "Admin" }, null)</li>
+        </ul>
+    </li>*@
+
+@*@if (User.IsInRole(RoleType.Admin))
+{*@
+    <li class="header">Hệ thống</li>
+    <li class="treeview">
+        <a href="@(Url.Action("List", "User", new { Area = "Admin" }))">
+            <i class="fa fa-users"></i> <span>Tài khoản</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li><a href="@(Url.Action("List", "User", new { Area = "Admin" }))"><i class="fa fa-list"></i>Danh sách</a></li>
+            <li><a href="@(Url.Action("Create", "User", new { Area = "Admin" }))"><i class="fa fa-plus"></i>Thêm mới</a></li>
+        </ul>
+    </li>
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-edit"></i> <span>Setting</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li><a href="@(Url.Action("System", "Setting", new { Area = "Admin" }))"><i class="fa toggle-on"></i>Hệ thống</a></li>
+            <li><a href="@(Url.Action("Log", "Setting", new { Area = "Admin" }))"><i class="fa fa-warning"></i>Log</a></li>
+        </ul>
+    </li>
+@*}*@
+

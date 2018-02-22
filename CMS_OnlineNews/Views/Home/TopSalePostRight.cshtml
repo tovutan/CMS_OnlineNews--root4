@@ -1,0 +1,17 @@
+﻿@model IEnumerable<Model.ViewModel.Post.PostItemModel>
+<div class="fs-news-rboxs">
+    <h2 class="fs-news-rhd">Khuyến mãi</h2>
+    <div class="fs-news-rmain">
+         <ul class="fs-news-rkm">
+             @foreach (var salePost in Model)
+             {
+                 <li>
+                     <a class="clear-fix" href="@Url.RouteUrl("PostDetail",new { catURL=salePost.Category.URL,postURL=salePost.URL})" title="@salePost.SeoTitle">
+                         <span class="fs-news-rkmimg"><img src="@salePost.ImageURL.AvataImage.Medium" alt="@salePost.SeoTitle" /></span>
+                         <h3 class="fs-news-rkmtit">@salePost.Title</h3>
+                     </a>
+                 </li>
+             }
+         </ul>
+    </div>
+</div>

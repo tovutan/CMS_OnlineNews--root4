@@ -1,0 +1,160 @@
+﻿@model Model.ViewModel.Post.PostListModel
+@{
+    //ViewBag.Title = "KhachHang";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+    if (Model.Category != null)
+    {
+        ViewBag.Title = $"{Model.Category.SeoTitle} - FPTShop.com.vn";
+        ViewBag.Name = Model.Category.SeoTitle;
+        ViewBag.LoadingURL = Model.Category.URL;
+    }
+    else
+    {
+        ViewBag.Title = $"{Model.Tag.SeoTitle} - FPTShop.com.vn";
+        ViewBag.Name = Model.Tag.SeoTitle;
+        ViewBag.LoadingURL = Model.Category.URL;
+    }
+}
+
+@section scripts{
+<script>
+         (function($){
+
+            // Viết hàm GetDataLoop
+            function GetDataLoop(page){
+                IsLoading=true;
+                var loadmore=$("#loadMore");
+                var loading=$("#newsLoading");
+                $.ajax({
+                        type:'GET',
+                        url:"/"+page+"/@Model.Category.URL"+"/"+0,
+                        dataType:'html',
+                        success:function(data){
+                                 $("#newsLoading").before(data)
+                                 IsLoading = false;
+                                 loadmore.hide();
+                            },
+                        beforeSend:function(){
+                                loading.hide();
+                                loadmore.hide();
+
+                            },
+                        complete:function(){
+                                loading.hide();
+                                loadmore.hide();
+                            },
+                        error:function(){
+                                IsLoading=false;
+                                loading.hide();
+                            }
+                    });
+                }
+                // hàm Ajax khi gọi thì nó sẽ trả về nếu thành công tức trả về 200 thì sẽ có kết quả trong success với tham số.
+                $(window).ready(function(){
+                       var IsLoading=false;
+                       
+                       var pageIndex=2;
+                        // sự kiện scroll
+                        $(window).scroll(function(){
+
+                            var hT =$("#listNews").offset().top;
+                                hH =$("#listNews").outerHeight();
+                                wH=$(window).height();
+                                wS = $(this).scrollTop();
+                                if(pageIndex<=4 && !IsLoading && wS>(hT+hH-wH))
+                                {
+                                    GetData();
+                                }
+                         });
+                            // viết sự kiện  khi load vượt qua điều kiện thì nó sẽ sang có nút để bấm xem thêm
+                            $("#loadMore").on('click',GetData);
+                            // viết hàm GetData
+                            function GetData(){
+                                IsLoading = true;
+                                var loading = $("#newsLoading");
+                                var loadmore = $("#loadMore");
+                                $.ajax({
+
+                                    type:'GET',
+                                    url:"/"+pageIndex+"/@Model.Category.URL"+"/"+0,
+                                    dataType:'html',
+                                    success:function(data){
+                                          if(data!=null && data!="")
+                                          {
+                                             if(window.search.length==0)
+                                             {
+                                                var link="/"+location.pathname.length==1?"":location.pathname+"?page=2";
+                                                window.history.pushState(null,null,link);
+                                             }
+                                            else
+                                             {
+                                                var link="/"+location.pathname.length==1?"":location.pathname+"?page="+(parseInt(location.search.replace("?page=",""))+1).toString();
+                                                window.history.pushState(null,null,link);
+                                             }
+                                                $("#newsLoading").before(data);
+                                                IsLoading=false;
+                                                loading.hide();
+                                                loadmore.hide();
+
+                                          }
+                                          else
+                                            {
+                                              IsLoading = true;
+                                              loading.hide();
+                                              loadmore.hide();
+                                            }
+                                       },
+                                        beforeSend:function(){
+                                            loading.show();
+                                            loadmore.hide();
+                                            },
+                                         complete:function(){
+                                                loading.hide();
+                                                loadmore.hide();
+                                            },
+                                          error:function(){
+                                              IsLoading = false;
+                                              loadmore.hide();
+                                            }
+                                });
+                               return false;
+                            }
+                    });
+                $(window).on('load',function(){
+                        var key,n;
+                        if(key=location.search.length,key!=null)
+                        {
+                            for(n=2;n<=parseInt(location.search.replace("?page=",""));n++)
+                            {
+                                  GetDataLoop(n);
+                            }
+                            if((n-1)==parseInt(location.search.replace("?page=","")))
+                            {
+                                $('html','body').animate({scrollTop:$(".fs-newsbdpd").offset().top-1000},0);
+                            }
+                        }
+                })
+
+         })(window.jQuery);
+</script>
+}
+
+<section class="fs-main">  
+        <div class="f-wrap">
+            <h1 class="fs-newsh1">@ViewBag.Name</h1>
+            @Html.Action("NavigationBars")
+            <div class="fs-newsrow clear-fix">
+                    <div id="listNews" class="fs-newscol fs-newscol1">
+                        @Html.Partial("ListPostBox",Model.Posts)
+                        <p id="newsLoading" class="fs-newsloading" hidden><img src="~/images/news/giphy.gif" alt="" />Đang tải thêm...</p>
+                        <p id="loadMore" class="fs-newsdt-vmsas" hidden="" style="display: block;"><a href="" title="">Xem thêm <i></i></a> </p>
+                    </div>
+                    <div class="fs-newscol fs-newscol2">
+                        @Html.Action("TopViewPostRight")
+                        @Html.Partial("TopProductRight")
+                        @Html.Action("TopSalePostRight")
+                    </div>
+            </div>
+        </div>
+</section>
+

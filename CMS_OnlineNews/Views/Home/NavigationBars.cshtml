@@ -1,0 +1,12 @@
+﻿@using Model.ViewModel
+@model List<NavigationItemModel>
+<ul id="newsNavigationBar" class="fs-newsmenu clearfix">
+    <li data-navi-url="home"><a href="@Url.Content("~/")" title="Tin mới">Tin mới</a></li>
+    @foreach (var navi in Model)
+    {
+        @*<li data-navi-url="@(string.IsNullOrEmpty(navi.URL)?navi.CustomURL: navi.URL)"><a href="@(string.IsNullOrEmpty(navi.URL)?navi.CustomURL: Url.RouteUrl("ListPostCategory", new { catURL = navi.URL }))" title="@(string.IsNullOrEmpty(navi.SeoTitle )?navi.Title:navi.SeoTitle)">@(string.IsNullOrEmpty(navi.CustomTitle) ? navi.Title : navi.CustomTitle)</a></li>*@
+
+        <li data-navi-url="@(string.IsNullOrEmpty(navi.URL)?navi.CustomURL: navi.URL)"><a href="@(string.IsNullOrEmpty(navi.URL)?navi.CustomURL:Url.RouteUrl("ListPostCategory",new { catURL=navi.URL }))" title="@(string.IsNullOrEmpty(navi.SeoTitle )?navi.Title:navi.SeoTitle)">@(string.IsNullOrEmpty(navi.CustomTitle) ? navi.Title : navi.CustomTitle)</a></li>
+
+    }
+</ul>

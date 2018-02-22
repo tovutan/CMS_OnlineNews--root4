@@ -1,0 +1,52 @@
+﻿@*@using FPTShop.Utils
+@model IEnumerable<FPTShop.News.Models.Post.PostItemModel>*@   
+@using Model.ViewModel.Post
+@model IEnumerable<PostItemModel>
+
+<div class="fs-newsboxs fs-newsmrt20">
+    <div class="fs-newsbdpd">
+        <div class="fs-newsrow clearfix">
+            <div class="fs-newscol fs-newscol3">
+                <div class="fs-ne3-left">
+                    <ul class="clearfix">
+                        @foreach (var post in Model.Take(3))
+                        {
+                            <li>
+                                <div class="fs-ne3-it">
+                                    @*<a class="fs-ne3-img" href="@Url.RouteUrl("PostDetail", new { catURL = post.Category.URL, postURL = post.URL })" title="@post.SeoTitle"><img src="@post.ImageURL.AvataImage.Medium" alt=""></a>
+                                    <div class="fs-ne3-if">
+                                        <h3><a class="fs-ne3-tit" href="@Url.RouteUrl("PostDetail", new { catURL = post.Category.URL, postURL = post.URL })" title="@post.SeoTitle">@post.Title</a> </h3>
+                                        <p class="fs-ne3-bot"><span>@post.User.AuthorName,</span> <span class="fs-ne3-time">1 giờ trước</span> trong <a href="~/@post.Category.URL" title="@post.Category.SeoDescription">@post.Category.Name</a></p>
+                                    </div>*@
+
+
+                                    <a class="fs-ne3-img" href="@Url.RouteUrl("PostDetail",new { catURL=post.Category.URL,postURL=post.URL})" title="@post.SeoTitle"><img src="@post.ImageURL.AvataImage.Medium" alt=""></a>
+                                    <div class="fs-ne3-if">
+                                        <h3><a class="fs-ne3-tit" href="@Url.RouteUrl("PostDetail",new { catURL=post.Category.URL,postURL=post.URL})" title="@post.SeoTitle">@post.Title</a> </h3>
+                                        <p class="fs-ne3-bot"><span>@post.User.AuthorName,</span> <span class="fs-ne3-time">1 giờ trước</span> trong <a href="~/@post.Category.URL" title="@post.Category.SeoDescription">@post.Category.Name</a></p>
+                                    </div>
+                                </div>
+                            </li>
+                            <!--1-->
+                        }
+                    </ul>
+                </div>
+            </div>
+            <div class="fs-newscol fs-newscol4">
+                <div class="fs-ne4-right mCustomScrollbar">
+                    <ul>
+                        @foreach (var post in Model.Skip(3))
+                        {
+                            <li>
+                                @*<h3><a class="fs-ne4-tit" href="@Url.RouteUrl("PostDetail", new { catURL = post.Category.URL, postURL = post.URL })" title="@post.SeoTitle">@post.Title</a></h3>*@
+                                <h3><a class="fs-ne4-tit" href="@Url.RouteUrl("PostDetail",new { catURL=post.Category.URL,postURL=post.URL})" title="@post.SeoTitle">@post.Title</a></h3>
+                                <p class="fs-ne4-bot">@post.User.AuthorName trong <a href="~/@post.Category.URL" title="@post.Category.SeoTitle">@post.Category.Name</a> </p>
+                            </li>
+                            <!--1-->
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

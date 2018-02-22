@@ -1,0 +1,102 @@
+﻿@using Model.ViewModel.Post
+@model PostDetailModel
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts{
+    <script src="@Url.Content("~/Scripts/libs/jquery.mCustomScrollbar.concat.min.js")"></script>
+    <script>
+        (function($){
+            $(document).ready(function(){
+            $("#newsNavigationBar >li[data-navi-url='@Model.Post.Category.URL']").addClass("active");
+        });
+        })(window.jQuery);
+    </script>
+}
+<section class="fs-main">
+    <div class="f-wrap">
+        <h1 class="fs-newsh1">TIN TỨC</h1>
+        @Html.Action("NavigationBars")
+    </div>
+</section>
+
+<section class="fs-newsdtmain">
+    <div class="fs-newsdtct">
+        <div class="fs-newswrap">
+            <h1 class="fs-newsdt-tit">@Model.Post.Title</h1>
+            <p class="fs-newsdt-atr"><span class="fs-newsdt-atrimg"><img src="@Model.Post.User.ImageURL" alt="@Model.Post.SeoTitle"> @Model.Post.User.AuthorName,</span><span>@Utility.Datetime.GetBackDate(Model.Post.CreateDate)</span> <span class="fs-newsdt-atrcmt"><img src="~/images/news/pmb.png" alt=""> 23 Bình luận</span></p>
+            <div class="fs-newsdt-des">@Model.Post.ShortDesc</div>
+            <ul class="fs-newsdt-vmore">
+                @foreach (var postRelated in Model.PostRelated)
+                {
+                    <li><a href="@Url.RouteUrl("PostDetail", new { catURL = postRelated.Category.URL,  postUrl = postRelated.URL })" title="">@postRelated.Title</a></li>
+                }
+            </ul>
+            <div class="fs-newsdt-cten clearfix">
+                @*<div><img src="@Model.Post.ImageURL" alt=""></div>*@
+                @Html.Raw(Model.Post.FullDesc)
+            </div>
+            <div class="fs-newsdt-share clearfix">
+                <ul>
+                    <li>Chia sẻ bài viết</li>
+                    <li class="clearfix">
+                        <img src="~/images/news/fb.png" alt="">
+                    </li>
+                </ul>
+            </div>
+            <div class="fs-newsdt-key">
+                <ul>
+                    <li><strong>Có thể bạn quan tâm:</strong></li>
+                    @if (Model.Post.Tags != null)
+                    {
+                        foreach (var tag in Model.Post.Tags)
+                        {
+                            <li><a href="@string.Format(System.Configuration.ConfigurationManager.AppSettings["FPTSearchURL"], @tag.URL)" title="@tag.SeoTitle">@tag.Name</a></li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="fs-newsdtbot">
+        <div class="fs-newswrap">
+            @*<div class="fs-newsdt-tgia fs-newsdt-bbox clearfix">
+                    <span class="fs-newsdt-tgiaimg"><img src="~/@Model.Post.User.ImageURL" alt=""></span>
+                    <div class="fs-newsdt-tgiaif">
+                        <p class="fs-newsdt-tgianame">@Model.Post.User.AuthorName <a href="" title="">Xem tất cả bài viết</a></p>
+                        <div class="fs-newsdt-tgiatxt">
+                            @Model.Post.User.Description
+                        </div>
+                    </div>
+                </div>*@
+            <div class="fs-newsdt-vms fs-newsdt-bbox">
+                <h2 class="fs-newsdt-vmshd">Bài viết liên quan</h2>
+                <div class="fs-newsdt-vmsbox">
+                    <div class="fs-newsdt-vmsrow clearfix">
+                        @foreach (var postRelated in Model.PostAuthor)
+                        {
+                            <div class="fs-newsdt-vmsit">
+                                <a class="fs-newsdt-vmsimg" href="@Url.RouteUrl("PostDetail", new { catURL = postRelated.Category.URL, postUrl =  postRelated.URL })"><img src="@postRelated.ImageURL.AvataImage.Thumb" alt="@postRelated.SeoTitle"></a>
+                                <div class="fs-newsdt-vmsif">
+                                    <h3><a class="fs-newsdt-vmstit" href="@Url.RouteUrl("PostDetail", new { catURL = postRelated.Category.URL, postUrl =  postRelated.URL })" title="">@postRelated.Title</a></h3>
+                                    <p class="fs-newsdt-vmsbot">@postRelated.User.AuthorName <a href="@Url.RouteUrl("ListPostCategory",new { catURL=postRelated.Category.URL})" title="@postRelated.Category.SeoTitle">@postRelated.Category.Name</a> </p>
+                                </div>
+                            </div>
+                            <!--1-->
+                        }
+                    </div>
+                    @*<p class="fs-newsdt-vmsas"><a href="" title="">Xem thêm</a></p>*@
+                </div>
+            </div>
+            @*<div class="fs-newsdt-cmts fs-newsdt-bbox">
+                    <h2 class="fs-newsdt-vmshd">23 Bình luận</h2>
+                    <div class="fs-newsdt-cmtsbox">
+                        CMT
+                    </div>
+                </div>*@
+        </div>
+    </div>
+</section>
+

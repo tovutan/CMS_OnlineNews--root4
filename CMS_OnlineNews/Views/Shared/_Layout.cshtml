@@ -1,0 +1,147 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @RenderSection("metadata", required: false)
+    <title>@(Html.Raw(string.IsNullOrEmpty(ViewBag.Title) ? "Fptshop.com.vn - ĐTDD, Laptop, Máy tính bảng, Máy ảnh,...Chính hãng." : ViewBag.Title + " - Fptshop.com.vn"))</title>
+    @Html.Raw("<meta name=\"title\" content=\"" + (string.IsNullOrEmpty(ViewBag.Title) ? "Fptshop.com.vn - ĐTDD, Laptop, Máy tính bảng, Máy ảnh,...Chính hãng." : ViewBag.Title) + "\" />")
+    @Html.Raw("<meta name=\"description\" content=\"" + (string.IsNullOrEmpty(ViewBag.Description) ? "Hàng 100% chính hãng được phân phối bởi hệ thống bán lẻ kỹ thuật số FPTShop cùng với nhiều khuyến mãi hấp dẫn, bảo hành chính hãng. Mua trực tuyến giá rẻ hơn." : ViewBag.Description) + "\" />")
+    @Html.Raw("<meta name=\"keywords\" content=\"" + (string.IsNullOrEmpty(ViewBag.Keywords) ? "điện thoại di dộng, máy tính bảng, dien thoai chinh hang, may tinh xach tay, laptop chinh hang, phu kien laptop, điện thoại, dien thoai di dong,may tinh bang" : ViewBag.Keywords) + "\" />")
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="copyright" content="Công ty Cổ phần Bán lẻ Kỹ thuật số FPT">
+    <meta name="author" content="Công ty Cổ phần Bán lẻ Kỹ thuật số FPT">
+    <meta http-equiv="audience" content="General">
+    <meta name="resource-type" content="Document">
+    <meta name="distribution" content="Global">
+    <meta name="revisit-after" content="1 days" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="GENERATOR" content="Công ty Cổ phần Bán lẻ Kỹ thuật số FPT">
+    <meta property="og:site_name" content="FPTShop.com.vn" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="vi_VN" />
+    <meta property="og:title" content="Fptshop.com.vn | ĐTDD, Laptop, Máy tính bảng, Máy ảnh,...Chính hãng." />
+    <meta property="og:description" content="Hàng 100% chính hãng được phân phối bởi hệ thống bán lẻ kỹ thuật số FPTShop cùng với nhiều khuyến mãi hấp dẫn, bảo hành chính hãng. Mua trực tuyến giá rẻ hơn" />
+    @Html.Raw("<meta name=\"ROBOTS\" content=\"" + (string.IsNullOrEmpty(ViewBag.NoIndex) ? "INDEX, FOLLOW" : ViewBag.NoIndex) + "\" />")
+
+    <link rel="canonical" href="@("https://fptshop.com.vn" + Request.Url.AbsolutePath)" />
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta property="fb:app_id" content="948243871965133" />
+    @Styles.Render("~/Content/css")
+    @*@Styles.RenderFormat("<style>{0}</style>", Styles.Render("~/Content/cssv3").ToString())*@
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="/scripts/v3/libs/jquery/html5shiv.min.js"></script>
+    <script src="/scripts/v3/libs/respond/respond.min.js"></script>
+    <![endif]-->
+    <!--[if gte IE 9]>
+    <style type="text/css">
+        .gradient {
+            filter: none;
+        }
+    </style>
+    <![endif]-->
+    @RenderSection("styles", required: false)
+    @Scripts.Render("~/bundles/script")
+    @RenderSection("scriptHead", required: false)
+    @*<script>
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+            ga('create', 'UA-36867340-1', 'auto');
+            ga('send', 'pageview');
+            ga('require', 'ecommerce', 'ecommerce.js');
+        </script>
+        <!-- ANTS Analytics -->
+        <script type="text/javascript">
+            var _siteId = "512046464";
+            setTimeout(
+                   function () {
+                       (function () {
+                           var e = document.createElement("script"); e.type = "text/javascript", e.async = !0, e.src = "//st-a.anthill.vn/adx.js";
+                           var t = document.getElementsByTagName("script")[0]; t.parentNode.insertBefore(e, t)
+                       })();
+                   }
+               , 7000);
+        </script>
+        <!-- Google Tag Manager -->
+        <script>
+            (function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+            'gtm.start':
+            new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+            'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+            })(window, document, 'script', 'dataLayer', 'GTM-W84P7P');
+        </script>
+        <!-- End Google Tag Manager -->*@
+</head>
+<body>
+    <header class="fs-header">
+        <div class="f-hdtop">
+            <div class="f-wrap">
+                <a class="fs-logo" href="" title=""><i class="ficon f-logo"></i></a>
+                <ul class="fs-hdmn">
+                    <li>
+                        <a href="" title=""><i class="ficon f-news"></i> <span>Tin hay</span></a>
+                        <ul class="fs-hdmsub fs-hdmsnews">
+                            <li><a href="" title="">Tin mới</a></li>
+                            <li><a href="" title="">Diễn đàn</a></li>
+                            <li><a href="" title="">Khuyến mãi</a></li>
+                            <li><a href="" title="">Thủ thuật</a></li>
+                            <li><a href="" title="">Video hot</a></li>
+                            <li><a href="" title="">Góc khách hàng</a></li>
+                            <li><a href="" title="">Đánh giá - Tư vấn</a></li>
+                            <li><a href="" title="">Xu hướng</a></li>
+                            <li><a href="" title="">Giải trí</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="" title=""><i class="ficon f-hd"></i> <span>Hỏi đáp</span></a></li>
+                    <li><a href="" title=""><i class="ficon f-mtts"></i> <span>Mua trước trả sau</span></a></li>
+                </ul>
+                @Html.Partial("TopSearch")
+            </div>
+        </div>
+        @Html.Partial("TopNavigationBars")
+    </header>
+    @RenderBody()
+    @Html.Partial("Footer")
+    @RenderSection("scripts", required: false)
+    @*<!-- Facebook Pixel Code -->
+        <script>
+            !function (f, b, e, v, n, t, s) {
+                if (f.fbq) return; n = f.fbq = function () {
+                    n.callMethod ?
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+                }; if (!f._fbq) f._fbq = n;
+                n.push = n; n.loaded = !0; n.version = '2.0'; n.queue = []; t = b.createElement(e); t.async = !0;
+                t.src = v; s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s)
+            }(window,
+            document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', '527503604082474', {
+                em: 'insert_email_variable,'
+            });
+            fbq('track', 'PageView');
+        </script>
+        <noscript>
+            <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=527503604082474&ev=PageView&noscript=1&quot;" />
+        </noscript>
+        <!-- DO NOT MODIFY -->
+        <!-- End Facebook Pixel Code -->
+        <!-- Google Tag Manager (noscript) -->
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W84P7P" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+        <!-- End Google Tag Manager (noscript) -->*@
+</body>
+</html>
+

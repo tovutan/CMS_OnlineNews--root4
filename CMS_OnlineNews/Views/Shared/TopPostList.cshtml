@@ -1,0 +1,47 @@
+﻿
+@using Utility
+@using Model.ViewModel.Post
+@model  IEnumerable<PostItemModel>
+
+<div class="fs-newsboxs fs-newsbmrb">
+    @*thẻ div đầu tiên trong tin mới*@
+    <div class="fs-newsrow clearfix">
+        <div class="fs-newscol fs-newscol3">
+            <div class="fs-ne1-top">
+                @{
+
+                     var topPost = Model.First();
+                     @*<a class="fs-ne1-img" href="@Url.RouteUrl("PostDetail", new { catURL = topPost.Category.URL, postURL = topPost.URL })" title="@topPost.SeoTitle"><img src="@topPost.ImageURL.AvataImage.Medium" alt="@topPost.SeoTitle"></a>
+                     <h3><a class="fs-ne1-tit" href="@Url.RouteUrl("PostDetail", new { catURL = topPost.Category.URL, postURL = topPost.URL })" title="@topPost.SeoTitle">@topPost.Title</a></h3>*@
+
+                    <a class="fs-ne1-img" href="@Url.RouteUrl("PostDetail",new { catURL=topPost.Category.URL,postURL=topPost.URL})"title="@topPost.SeoTitle"><img src="@topPost.ImageURL.AvataImage.Medium" alt="@topPost.SeoTitle"></a>
+                    <h3><a class="fs-ne1-tit" href="@Url.RouteUrl("PostDetail",new { catURL=topPost.Category.URL,postURL=topPost.URL})"title="@topPost.SeoTitle">@topPost.Title</a></h3>
+                     <p class="fs-ne1-time"><i class="fs-necmt"></i> 214 - 1 giờ trước</p>
+                }
+            </div>
+        </div>
+        <div class="fs-newscol fs-newscol4">
+            <div class="fs-ne1-right mCustomScrollbar">
+                @foreach (var post in Model.Skip(1))
+    {
+                    <div class="fs-ne1-it clearfix">
+                        @*<a class="fs-ne1-rimg" href="@Url.RouteUrl("PostDetail", new { catURL = post.Category.URL, postURL = post.URL })" title="@post.SeoTitle"><img src="@post.ImageURL.AvataImage.Thumb" alt="@post.SeoTitle"></a>
+                        <div class="fs-ne1-if">
+                            <h3><a class="fs-ne1-name" href="@Url.RouteUrl("PostDetail", new { catURL = post.Category.URL, postURL = post.URL })" title="@post.SeoTitle">@post.Title</a></h3>
+                            <p class="fs-ne1-time"><i class="fs-necmt"></i> 35</p>
+                        </div>*@
+
+                        <a class="fs-ne1-rimg" href="@Url.RouteUrl("PostDetail",new{ catURL=post.Category.URL,postURL=post.URL})" title="@post.SeoTitle"><img src="@post.ImageURL.AvataImage.Thumb" alt="@post.SeoTitle"></a>
+                        <div class="fs-ne1-if">
+                            <h3><a class="fs-ne1-name" href="@Url.RouteUrl("PostDetail",new { catURL=post.Category.URL,postURL=post.URL})" title="@post.SeoTitle">@post.Title</a></h3>
+                            <p class="fs-ne1-time"><i class="fs-necmt"></i> 35</p>
+                        </div>
+
+
+                    </div>
+            <!--1-->
+}
+            </div>
+        </div>
+    </div>
+</div>

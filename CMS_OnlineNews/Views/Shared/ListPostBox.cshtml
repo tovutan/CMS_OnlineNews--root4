@@ -1,0 +1,7 @@
+﻿@model IEnumerable<Model.ViewModel.Post.PostItemModel>
+<div class="fs-newsboxs">
+    @foreach (var post in Model)
+    {
+        @Html.Partial("PostBox", post)
+    }
+</div>

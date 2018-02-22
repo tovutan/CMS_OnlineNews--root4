@@ -1,0 +1,25 @@
+﻿
+@using Model.ViewModel.Post
+@model List<PostItemModel>
+<div class="fs-news-rboxs">
+    <h2 style="margin-top:0px;margin-bottom:0px;" class="fs-news-rhd">Xem nhiều</h2>
+    <div class="fs-news-rmain">
+        <ul class="fs-news-rxn">
+            @{
+                int top = 1;
+                foreach (var post in Model)
+                {
+                    <li>
+                        @*<a class="clearfix" href="@Url.RouteUrl("PostDetail", new { catURL = post.Category.URL, postURL = post.URL })" title="@post.SeoTitle">*@
+                        <a class="clearfix" href="#" title="@post.SeoTitle">
+                            <span class="fs-news-rxnst">@top</span>
+                            <h3 style="margin-top:0px;margin-bottom:0px;" class="fs-news-rxnh">@post.Title</h3>
+                        </a>
+                    </li>
+                    <!--1-->
+                    top += 1;
+                }
+            }
+        </ul>
+    </div>
+</div>

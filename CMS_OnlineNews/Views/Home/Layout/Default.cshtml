@@ -1,0 +1,198 @@
+﻿@model Model.ViewModel.Post.PostListModel
+@{
+    if (Model.Category != null)
+    {
+        ViewBag.Title = $"{Model.Category.SeoTitle}-FPTShop.com.vn";
+        ViewBag.Name = Model.Category.SeoTitle;
+        ViewBag.LoadingURL = Model.Category.URL;
+    }
+    else
+    {
+        ViewBag.Title = $"{Model.Tag.SeoTitle} - FPTShop.com.vn";
+        ViewBag.Name = Model.Tag.SeoTitle;
+        ViewBag.LoadingURL = Model.Category.URL;
+    }
+    // Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts{
+<script>
+            (function($){
+
+                // Viết hàm nhận data lặp GetLoopData;
+                function GetLoopData(page){
+                    IsLoading=true;
+                    var loading=$("#newsLoading");
+                    var loadmore=$("#loadMore");
+                    $.ajax({
+                        type:'GET',
+                        url: "/"+page+'/@Model.Category.URL'+'/'+0,
+                        // dựa trên 3 tham số truyền vào trong LoadPostCategory
+
+
+                        // url:'/Home/LoadPostCategory',
+                        @*url:'@Url.RouteUrl(new { action = "LoadPostCategory", controller = "Home",catURL=Model.Category.URL})',
+                        data:{
+                                "page":page,
+                                catURL:'@Model.Category.URL',
+                                hotNum:0
+                        },*@
+                        dataType:'html',
+                        success:function(data){
+                                if(data!=null &&data!="")
+                                {
+                                    $("#newsLoading").before(data);
+                                    IsLoading=false;
+                                    loadmore.show();
+                                    //loading.hide();
+                                }
+                                else
+                                {
+                                     //IsLoading=true;
+                                        loading.show();
+                                }
+                            },
+                         beforeSend:function(){
+                                loadmore.show();
+                                loading.hide();
+                            },
+                        complete:function(){
+                                loading.hide();
+                                moreload.show();
+                            },
+                        error:function(){
+                                loading.hide();
+                                IsLoading=false;
+                            }
+                    });
+                 }
+
+                 $(window).ready(function(){
+                            pageIndex=2;
+                           var IsLoading=false;
+
+                         // viết sự kiện cuộn trang
+                        $(window).scroll(function(){
+                             var  hT=$("#listNews").offset().top,
+                                  hH=$("#listNews").outerHeight(),
+                                  wH=$(window).height(),
+                                  wS=$(this).scrollTop();
+                                if(pageIndex<=4 && !IsLoading && wS>(hT+hH-wH))
+                                {
+                                    GetData();
+                                }
+
+                        });
+                         // Nếu khi tự load trang vượt quá điều kiện tự động loading thì chuyển nó về click
+                        $("#loadMore").on('click',GetData);
+                        // Viết hàm GetData
+                        function GetData(){
+                                IsLoading=true;
+                                var loadmore=$("#loadMore");
+                                var loading=$("#newsLoading");
+                            $.ajax({
+                                   type:'GET',
+                                    //url: "/"+pageIndex+'/@Model.Category.URL'+'/'+0,
+                                      url:"/"+pageIndex+"/@Model.Category.URL"+"/"+0,
+                                    // dựa trên 3 tham số truyền vào trong LoadPostCategory
+
+
+
+                                   // url:'/Home/LoadPostCategory',
+                                    @*url:'@Url.RouteUrl(new { action= "LoadPostCategory",controller="Home",catURL = Model.Category.URL })',
+                                    data:{
+                                            "page":pageIndex,
+                                            catURL:'@Model.Category.URL',
+                                            hotNum:0
+                                    },*@
+                                   dataType:'html',
+                                   success:function(data){
+                                          if(data!=null &&data!="")
+                                            {
+                                                if(window.location.search.length==0)
+                                                {
+                                                    var link="/"+location.pathname.length==1?"":location.pathname+"?page=2";
+                                                    window.history.pushState(null,null,link);
+                                                }
+                                                else
+                                                {
+                                                    var link="/"+location.pathname.length==1?"":location.pathname +"?page="+ (parseInt(location.search.replace("?page=",""))+1).toString();
+                                                    window.history.pushState(null,null,link);
+                                                }
+                                                $("#newsLoading").before(data);
+                                                pageIndex++;
+                                                IsLoading=false;
+                                                loading.hide();
+                                                loadmore.show();
+
+                                            }
+                                            else
+                                            {
+                                                IsLoading=true;
+                                                loading.hide();
+                                                loadmore.hide();
+
+                                            }
+                                    },
+                                    beforeSend:function(){
+                                            loading.show();
+                                            loadmore.hide();
+
+                                        },
+                                    complete:function(){
+                                            loading.hide();
+                                            loadmore.show();
+
+                                        },
+                                    error:function(){
+                                        IsLoading=false;
+                                        loadmore.show();
+                                        loading.hide();
+                                    }
+                                });
+                            return false;
+                        }
+
+
+                });
+                  $(window).on('load',function(){
+                    var key,n;
+                    if(key=location.search,key!=null)
+                    {
+                        for(n=2;n<=parseInt(location.search.replace("?page=",""));n++)
+                        {
+                            GetLoopData(n);
+                        }
+                        if((n-1)==parseInt(location.search.replace("?page=","")))
+                        {
+                            $('html','body').animate({scrollTop:$(".fs-newsbdpd").offset().top-1000},0);
+                        }
+
+                    }
+                })
+            })(window.jQuery);
+</script>
+    }
+
+
+
+        <section class="fs-main">
+            <div class="f-wrap">
+                <h1 class="fs-newsh1">@ViewBag.Name</h1>
+                @Html.Action("NavigationBars")
+                <div class="fs-newsrow clearfix">
+                    <div id="listNews" class="fs-newscol fs-newscol1">
+                        @Html.Partial("ListPostBox", Model.Posts)
+                        <p id="newsLoading" class="fs-newsloading" hidden><img src="images/news/giphy.gif" alt=""> Đang tải thêm</p>
+                        <p id="loadMore" class="fs-newsdt-vmsas" hidden="" style="display: block;"><a href="" title="">Xem thêm <i></i></a> </p>
+                    </div>
+                    <div class="fs-newscol fs-newscol2">
+                        @Html.Action("SearchTagRight")
+                        @Html.Action("TopViewPostRight")
+                        @Html.Partial("TopProductRight")
+                        @Html.Action("TopSalePostRight")
+                    </div>
+                </div>
+            </div>
+        </section>
+

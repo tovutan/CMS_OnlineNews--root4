@@ -1,0 +1,27 @@
+﻿@using Utility
+@*@using Model.ViewModel.Post
+@model PostItemModel*@
+@model Model.ViewModel.Post.PostItemModel
+
+<div class="fs-ne2-it clearfix">
+    @*<a class="fs-ne2-img" href="@Url.RouteUrl("PostDetail", new { catURL = Model.Category.URL, postURL = Model.URL })" title="@Model.SeoTitle"><img src="@Model.ImageURL.AvataImage.Medium" alt="@Model.SeoTitle"></a>
+        <div class="fs-ne2-if">
+            <h2><a class="fs-ne2-ct" href="@Url.RouteUrl("ListPostCategory", new { catURL = Model.Category.URL })" title="@Model.Category.SeoTitle">@Model.Category.Name</a></h2>
+            <h3><a class="fs-ne2-tit" href="@Url.RouteUrl("PostDetail", new { catURL = Model.Category.URL, postURL = Model.URL })" title="@Model.SeoTitle">@Model.Title</a></h3>
+            <div class="fs-ne2-txt">@Model.ShortDesc</div>
+            <p class="fs-ne2-bot"><span class="fs-ne2-user"><img src="@Model.User.ImageURL" alt="@Model.User.AuthorName"></span> <span>@Model.User.AuthorName</span> <span>-</span> <span>@Model.CreateDate</span></p>
+        </div>*@
+
+
+
+    @*<a class="fs-ne2-img" href="@Url.RouteUrl("PostDetail",new { catURL=Model.Category.URL,postUrl=Model.URL})" title="@Model.SeoTitle"><img src="@Model.ImageURL.AvataImage.Medium" alt="@Model.SeoTitle"></a>*@
+    <a class="fs-ne2-img" href="@Url.RouteUrl("PostDetail",new { catURL=Model.Category.URL,postUrl=Model.URL})" title="@Model.SeoTitle"><img src="@Model.ImageURL.AvataImage.Medium" alt="@Model.SeoTitle"></a>
+    <div class="fs-ne2-if">
+        <h2 style="margin-top:0px;margin-bottom:0px; font-size:15px;"><a class="fs-ne2-ct" href="#" title="@Model.Category.SeoTitle">@Model.Category.Name</a></h2>
+        @*<h3><a class="fs-ne2-tit" href="@Url.RouteUrl("PostDetail",new { catURL=Model.Category.URL,postUrl=Model.URL})" title="@Model.SeoTitle">@Model.Title</a></h3>*@
+        <h3><a class="fs-ne2-tit" href="@Url.RouteUrl("PostDetail",new { catURL=Model.Category.URL,postUrl=Model.URL})" title="@Model.SeoTitle">@Model.Title</a></h3>
+        <div class="fs-ne2-txt">@Model.ShortDesc</div>
+        @*<p class="fs-ne2-bot"><span class="fs-ne2-user"><img src="@Model.User.ImageURL" alt="@Model.User.AuthorName"></span> <span>@Model.User.AuthorName</span> <span>-</span> <span>@Model.CreateDate</span></p>*@
+        <p class="fs-ne2-bot"><span class="fs-ne2-user"><img src="@Model.User.ImageURL" alt="@Model.User.AuthorName"></span> <span>@Model.User.AuthorName</span> <span>-</span> <span>@Model.CreateDate</span></p>
+    </div>
+</div>

@@ -1,0 +1,178 @@
+﻿@model Model.ViewModel.Post.PostListModel
+@{
+    ViewBag.Title = $"{Model.Category.SeoTitle}-FPTShop.com.vn";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section styles{
+       <link href="@Url.Content("~/Content/jquery.mCustomScrollbar.min.css")" rel="stylesheet" />
+    }
+
+@section scripts{
+        <script src="@Url.Content("~/Scripts/libs/jquery.mCustomScrollbar.concat.min.js")"></script>
+        <script>
+            (function ($) {
+                // viết hàm GetLoopData
+                function GetLoopData(page) {
+                    IsLoading = false;
+                    //var loadmore = $("#loadMore");
+                    var loading = $("#newsLoading");
+                    $.ajax({
+                        type: 'GET',
+                       // url: "/" + page + "/@Model.Category.URL" + "/" + 0,
+                         url: "/"+page+'/@Model.Category.URL'+'/'+0,
+                        @*url:'@Url.RouteUrl(new { action="LoadPostCategory",controller="Home"})',
+                        data:{
+                            "page":page,
+                             "catURL":'@Model.Category.URL',
+                             "hotNum":0,
+                        },*@
+                        dataType:'html',
+                        success: function (data)
+                        {
+                            if (data != null && data != "")
+                            {
+                                $("#newsLoading").before(data);
+                                //loadmore.show();
+                                //IsLoading = false;
+                            }
+                            else {
+                                //IsLoading = true;
+                                //loading.hide();
+                               // loadmore.hide();
+                            }
+
+                        },
+                        beforeSend: function () {
+                            loading.show();
+                            //loadmore.show();
+                        },
+                        complete: function () {
+                            loading.hide();
+                            //loadmore.show();
+                        },
+                        error: function () {
+                            IsLoading = false;
+                            loading.hide();
+                           // loadmore.hide();
+                        }
+                    });
+                }
+
+                // viết sự kiện cuộn chuột phân trang
+                $(document).ready(function () {
+                    var IsLoading = false;
+                    var pageIndex = 2;
+
+                    // sự kiện
+                    $(window).scroll(function () {
+                        var hT = $("#listNews").offset().top,
+                            hH = $("#listNews").outerHeight(),
+                            wH = $(window).height(),
+                            wS = $(this).scrollTop();
+                        if (pageIndex < 4 && !IsLoading && wS > (hT + hH - wH)) {
+                            GetData();
+                        }
+                    });
+                     // Viết hàm chạy sự kiện khi click
+                    $("#loadMore").on('click',GetData);
+                    // viết hàm GetData
+                    function GetData() {
+                        IsLoading = true;
+                        var loading = $("#newsLoading");
+                        var loadmore = $("#loadMore");
+                        $.ajax({
+                            type: 'GET',
+                            url: "/"+pageIndex+'/@Model.Category.URL'+'/'+0,
+                            @*url: "/" + pageindex + "/@model.category.url" + "/" + 0,*@
+                            @*url:'@Url.RouteUrl(new { action= "LoadPostCategory", controller="Home"})',
+                            data:{
+                                 "page":pageIndex,
+                                  "catURL":'@Model.Category.URL',
+                                  "hotNum":0
+                            },*@
+                            dataType: 'html',
+                            success: function (data)
+                            {
+                                if (data != null && data != "")
+                                {
+                                    if (window.location.search.length == 0) {
+                                        var link = "/" + location.pathname.length == 1 ? "" : location.pathname + "?page=2";
+                                        window.history.pushState(null, null, link);
+                                    }
+                                    else {
+                                        var link = "/" + location.pathname.length == 1 ? "" : location.pathname + "?page=" + (parseInt(location.search.replace("?page=", "")) + 1).toString();
+                                        window.history.pushState(null, null, link);
+                                    }
+                                    $("#newsLoading").before(data);
+                                    pageIndex++;
+                                    IsLoading = false;
+                                    loadmore.show();
+                                    loading.hide();
+
+                                }
+                                else {
+                                        IsLoading=true;
+                                        loading.hide();
+                                        loadmore.hide();
+                                        }
+                            },
+                            beforeSend: function () {
+                                //IsLoading = false;
+                                loadmore.hide();
+                                loading.show();
+                            },
+                            complete: function () {
+                                //loading.hide();
+                                //loadmore.show();
+                            },
+                            error: function () {
+                                IsLoading = false;
+                                loading.hide();
+                            }
+                        });
+                                 return false;
+                    }
+                });
+                // load
+                $(window).on('load', function () {
+                    var key,n;
+                    if (key = location.search, key != "")
+                    {
+                       for(n=2;n<=parseInt(location.search.replace("?page=",""));n++)
+                        {
+                            GetLoopData(n);
+                        }
+                        //if((n-1)==parseInt(location.search.replace("?page=","")))
+                       // {
+                        //    $('html','body').animate({scrollTop:$(".fs-newsbdpd").offset().top-1000},0);
+                        //}
+                        if((n-1)==parseInt(location.search.replace("?page=","")))
+                        {
+                            $('html','body').animate({scrollTop:$(".fs-newsbdpd").offset().top-1000},0);
+                        }
+                    }
+                })
+            })(window.jQuery);
+        </script>
+ }
+
+        <section class="fs-main">
+            <div class="f-wrap">
+                <h1 class="fs-newsh1">@Model.Category.Name</h1>
+                @Html.Action("NavigationBars")
+                <div class="fs-newsrow clearfix">
+                    <div id="listNews" class="fs-newscol fs-newscol1">
+                        @Html.Partial("TopPostList", Model.HotPosts)
+                        @Html.Partial("ListPostBox", Model.Posts)
+                        <p id="newsLoading" class="fs-newsloading"><img src="/images/news/giphy.gif" alt=""> Đang tải thêm</p>
+                        <p id="loadMore" class="fs-newsdt-vmsas" hidden="" style="display: block;"><a href="" title="">Xem thêm <i></i></a> </p>
+                    </div>
+                    <div class="fs-newscol fs-newscol2">
+                        @Html.Action("TopViewPostRight")
+                        @Html.Partial("TopProductRight")
+                        @Html.Action("TopSalePostRight")
+                    </div>
+                </div>
+            </div>
+        </section>
+

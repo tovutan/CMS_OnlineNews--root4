@@ -1,0 +1,114 @@
+﻿@using Model.ViewModel  
+@using PagedList.Mvc
+@using CMS_OnlineNews.Helper.Admin
+@using CMS_OnlineNews.Areas.Admin
+@model PagedList.IPagedList<Model.EF.Post>
+@using Newtonsoft.Json
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section styles{
+    <style>
+        .clickable-row {
+            cursor: pointer;
+        }
+    </style>
+}
+@section scripts{
+    <script src="@Url.Content("~/Scripts/libs/jquery.dataTables.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/libs/dataTables.bootstrap.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/libs/jquery.slimscroll.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/libs/fastclick.js")"></script>
+
+}
+
+<section class="content-header">
+    <h1 class="pull-left">
+        Danh sách tin tức
+    </h1>
+    <div class="pull-right">
+        <button type="submit" name="save" class="btn bg-blue" onclick="location.href='@Url.Action("Create")';">
+            @*<i class="fa fa-floppy-o"></i>*@
+            Tạo tin mới
+        </button>
+    </div>
+</section>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Danh sách</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div id="postGrid"></div>
+                    @*<script id="action-template" type="text/x-kendo-template">
+                            <div class="pull-right">
+                                <a class="btn btn-default" href="@Url.Action("Edit", new { })/#:data.ID#">
+                                    <i class="fa fa-edit"></i> Sửa
+                                </a>
+                                <a class="btn btn-default" onclick="confirmDelete(#:data.ID#)">
+                                    <i class="fa fa-remove"></i> Xóa
+                                </a>
+                            </div>
+                        </script>*@
+                    <table id="tbListNews" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th width="100px">Hình ảnh</th>
+                                <th>Tiêu đề</th>
+                                <th>URL</th>
+                                <th>Tác giả</th>
+                                <th>Ngày đăng</th>
+                                <th width="75px">Hiển thị</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var post in Model)
+                            {
+                                <tr class='clickable-row' data-href="@Url.Action("Detail", new { ID = post.Id })" data-id="@post.Id">
+                                    <td style="margin: auto;">@post.Id</td>
+                                    @*<td style="text-align:center;"><img style="max-height:100px;max-width:100px;" src="@(JsonConvert.DeserializeObject<ImageURLModel>(post.ImageURL).AvataImage.Thumb)" /></td>*@
+                                    <td style="text-align:center;"><img style="max-height:100px;max-width:100px;" src="@(JsonConvert.DeserializeObject<ImageURLModel>(post.ImageURL).AvataImage.Thumb)" /></td>
+                                    <td>@post.Title</td>
+                                    <td>@post.URL</td>
+                                    @*<td>@(string.IsNullOrEmpty(post.CreateUser.AuthorName) ? post.CreateUser.Email : post.CreateUser.AuthorName)</td>*@
+                                    @*<td>@(string.IsNullOrEmpty(post.CreateBy.AuthorName) ? post.CreateUser.Email : post.CreateUser.AuthorName)</td>*@
+                                    <td>@post.CreateBy</td>
+                                    <td>@post.CreateDate.ToString("dd/MM/yyyy")</td>
+                                    <td style="text-align:center;"><input type="checkbox" @(post.IsShow ? "checked='checked'" : "") onclick="return false" /></td>
+                                    <td style="text-align:center;">
+                                        @Html.ActionLink("Detail","Detail",new { Id=post.Id}) |
+                                        @Html.ActionLink("Edit", "Edit", new { Id = post.Id }) |
+                                        @Html.ActionLink("Delete", "Delete", new { Id = post.Id })
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="5">
+                                    <div class="dataTables_info">Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount</div>
+                                    @Html.PagedListPager(Model, page => Url.Action("List", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

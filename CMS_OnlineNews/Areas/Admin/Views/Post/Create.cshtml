@@ -1,0 +1,68 @@
+﻿@*@model FPTShop.News.Areas.Admin.Models.Post.PostItemModel*@
+@model Model.ViewModel.Post.PostItemModel
+@using Model.EF
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts
+{
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>
+    <script type="text/javascript">
+        (function ($) {
+            $(document).ready(function () {
+            });
+        })(window.jQuery);
+
+
+    </script>
+}
+@using (Html.BeginForm(new { }))
+{
+    @Html.AntiForgeryToken()
+    <section class="content-header">
+        <h1 class="pull-left">
+            Tạo tin mới
+            <small>
+                <i class="fa fa-arrow-circle-left"></i>
+                <a href="@(Url.Action("List", "Post", new { Area = "Admin" }))">Trở về trang danh sách</a>
+            </small>
+        </h1>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="pull-right" style="margin-bottom: 15px;">
+                    <button type="submit" name="save" class="btn bg-blue btn-lg" style="width: 100px;">
+                        <i class="fa fa-floppy-o"></i>
+                        Tạo
+                    </button>
+                </div>
+            </div>
+        </div>
+        @*@if (ViewBag.Message != null)
+        {
+            object mess = ViewBag.Message;
+            <div class="row">
+                <div id="messageRe" class="col-md-12">
+                    @Html.Partial("Alert", mess)
+                </div>
+            </div>
+        }*@
+        @*@Html.Partial("_CreateOrUpdate", Model)*@
+        @Html.Partial("_CreateOrUpdate",Model)
+        <div class="row">
+            <div class="col-md-12">
+                <div class="pull-right">
+                    <button type="submit" name="save" class="btn bg-blue btn-lg" style="width: 100px;">
+                        <i class="fa fa-floppy-o"></i>
+                        Tạo
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+}
